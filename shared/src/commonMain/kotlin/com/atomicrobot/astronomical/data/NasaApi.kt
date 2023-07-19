@@ -1,11 +1,8 @@
 package com.atomicrobot.astronomical.data
 
 import com.atomicrobot.astronomical.BuildKonfig
-import com.atomicrobot.astronomical.data.Constants
-import com.atomicrobot.astronomical.data.SpacePic
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url

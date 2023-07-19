@@ -6,10 +6,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.koin.core.component.KoinComponent
@@ -21,13 +19,16 @@ class AstronomyApp: KoinComponent {
 
     @Composable fun mainContent() {
 
+        val imageState by nasaViewModel.imageState.collectAsState()
+
         return MaterialTheme {
-            var greetingText by remember { mutableStateOf(nasaViewModel.number) }
+
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = {
-                    greetingText += 1
-                }) {
-                    Text(greetingText.toString())
+
+                Text(imageState.number.toString())
+
+                Button(onClick = nasaViewModel::newNumber) {
+                    Text("Get new number")
                 }
             }
         }
