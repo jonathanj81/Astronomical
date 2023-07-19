@@ -1,4 +1,4 @@
-package com.atomicrobot.astronomical
+package com.atomicrobot.astronomical.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -17,9 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.seiko.imageloader.ImageLoader
-import com.seiko.imageloader.component.setupKtorComponents
-import com.seiko.imageloader.model.ImageRequest
+import com.atomicrobot.astronomical.NasaViewModel
 import com.seiko.imageloader.rememberAsyncImagePainter
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -34,28 +32,16 @@ class AstronomyApp: KoinComponent {
 
         return MaterialTheme {
 
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-
-                when (imageState.currentImage?.url){
-                    null -> CircularProgressIndicator()
-                    else -> Image(
-                        modifier = Modifier.fillMaxWidth().aspectRatio(1f),
-                        contentScale = ContentScale.FillBounds,
-                        painter = rememberAsyncImagePainter(imageState.currentImage?.url ?: ""),
-                        contentDescription = "")
-                }
-
-                Button(onClick = nasaViewModel::getNewImage) {
-                    Text("Get details")
-                }
-
-                Button(onClick = nasaViewModel::getNewImage) {
-                    Text("Get new image")
-                }
+            when(imageState.screen){
+                Screens.Overview -> OverviewScreen(
+                    spacePic = imageState.currentImage,
+                    onGetNewImage = nasaViewModel::getNewImage,
+                    onNavigateToDetails = nasaViewModel::goToDetails
+                )
+                Screens.Details -> DetailsScreen(
+                    spacePic = imageState.currentImage,
+                    onNavigateBack = nasaViewModel::goBack
+                )
             }
         }
     }

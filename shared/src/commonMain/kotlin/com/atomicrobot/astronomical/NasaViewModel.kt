@@ -2,6 +2,7 @@ package com.atomicrobot.astronomical
 
 import com.atomicrobot.astronomical.data.NasaRepository
 import com.atomicrobot.astronomical.data.SpacePic
+import com.atomicrobot.astronomical.ui.Screens
 import com.seiko.imageloader.ImageLoader
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import io.ktor.util.logging.Logger
@@ -34,10 +35,9 @@ class NasaViewModel(
     }
 
     fun getNewImage() {
-
         _imageState.update {
             it.copy(
-                currentImage = it.currentImage?.let { it.copy(url = null) }
+                currentImage = it.currentImage?.copy(url = null)
             )
         }
 
@@ -52,7 +52,24 @@ class NasaViewModel(
         }
     }
 
+    fun goToDetails(){
+        _imageState.update {
+            it.copy(
+                screen = Screens.Details
+            )
+        }
+    }
+
+    fun goBack(){
+        _imageState.update {
+            it.copy(
+                screen = Screens.Overview
+            )
+        }
+    }
+
     data class State(
-        val currentImage: SpacePic? = null
+        val currentImage: SpacePic? = null,
+        val screen: Screens = Screens.Overview
     )
 }
