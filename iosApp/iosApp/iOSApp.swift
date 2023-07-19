@@ -1,7 +1,12 @@
 import SwiftUI
+import shared
 
 @main
 struct iOSApp: App {
+    init() {
+        CommonKt.doInitKoin(databaseDriverFactory: DatabaseDriverFactory())
+    }
+
 	var body: some Scene {
 		WindowGroup {
             ZStack {

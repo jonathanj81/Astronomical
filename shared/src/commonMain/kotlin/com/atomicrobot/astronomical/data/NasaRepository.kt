@@ -1,8 +1,11 @@
 package com.atomicrobot.astronomical.data
 
-class NasaRepository (databaseDriverFactory: DatabaseDriverFactory) {
-    private val database = Database(databaseDriverFactory)
-    private val api = NasaApi()
+import org.koin.core.component.KoinComponent
+
+class NasaRepository (
+    private val database: Database,
+    private val api: NasaApi
+): KoinComponent {
 
     @Throws(Exception::class)
     suspend fun retrieveRandomStartingImages(count: Int): List<SpacePic> {

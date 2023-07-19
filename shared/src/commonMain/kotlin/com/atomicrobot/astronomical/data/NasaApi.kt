@@ -9,21 +9,14 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import org.koin.core.component.KoinComponent
 
-class NasaApi {
-    private val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                useAlternativeNames = false
-            })
-        }
-    }
+class NasaApi(
+    private val client: HttpClient
+): KoinComponent {
 
     suspend fun getImageForSpecificDate(standardDate: String): SpacePic {
-        return httpClient.get {
+        return client.get {
             url(Constants.baseApi)
             parameter(Constants.apiParam, BuildKonfig.nasa)
             parameter(Constants.dateParam, standardDate)
@@ -31,7 +24,7 @@ class NasaApi {
     }
 
     suspend fun getRandomStartingImages(count: Int): List<SpacePic> {
-        return httpClient.get{
+        return client.get{
             url(Constants.baseApi)
             parameter(Constants.apiParam, BuildKonfig.nasa)
             parameter(Constants.countParam, count)
