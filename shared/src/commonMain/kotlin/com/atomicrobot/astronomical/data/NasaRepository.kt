@@ -20,6 +20,14 @@ class NasaRepository (
     }
 
     @Throws(Exception::class)
+    suspend fun retrieveSingleRandomImage(): SpacePic {
+        val apiImage = api.getRandomStartingImages(1).first()
+        database.insertImage(apiImage)
+
+        return apiImage
+    }
+
+    @Throws(Exception::class)
     suspend fun retrieveImageForSpecificDay(standardDate: String): SpacePic {
         val cachedImage = database.retrieveSingleImage(standardDate)
         return if (cachedImage == null) {

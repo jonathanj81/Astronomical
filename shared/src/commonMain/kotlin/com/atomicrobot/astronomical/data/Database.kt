@@ -41,8 +41,12 @@ class Database(databaseDriverFactory: DatabaseDriverFactory) {
 
     private fun Image.toSpacePic(): SpacePic = SpacePic(
         date = date,
-        explanation = explanation,
-        title = title,
-        url = url
+        explanation = explanation ?: "",
+        copyright = "",
+        hdUrl = "",
+        mediaType = "",
+        serviceVersion = "",
+        title = title ?: "",
+        url = url ?: ""
     )
 }

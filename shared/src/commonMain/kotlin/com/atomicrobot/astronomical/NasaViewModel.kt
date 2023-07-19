@@ -2,7 +2,9 @@ package com.atomicrobot.astronomical
 
 import com.atomicrobot.astronomical.data.NasaRepository
 import com.atomicrobot.astronomical.data.SpacePic
+import com.seiko.imageloader.ImageLoader
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
+import io.ktor.util.logging.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,39 +21,39 @@ class NasaViewModel(
 
     val imageState: StateFlow<State> = _imageState.asStateFlow()
 
-    fun newNumber() {
-        _imageState.update {
-            it.copy(
-                number = Random.nextInt(0,100)
-            )
+//    fun newNumber() {
+//        _imageState.update {
+//            it.copy(
+//                number = Random.nextInt(0,100)
+//            )
+//        }
+//    }
+
+    init {
+        viewModelScope.launch {
+            val image = nasaRepository.retrieveSingleRandomImage()
+
+            _imageState.update {
+                it.copy(
+                    currentImage = image
+                )
+            }
         }
     }
-//
-//    init {
-//        viewModelScope.launch {
-//            val image = nasaRepository.retrieveRandomStartingImages(5).first()
-//
-//            _imageState.update {
-//                it.copy(
-//                    currentImage = image
-//                )
-//            }
-//        }
-//    }
-//
-//    fun getNewImage() {
-//        viewModelScope.launch {
-//            val image = nasaRepository.retrieveRandomStartingImages(5).first()
-//
-//            _imageState.update {
-//                it.copy(
-//                    currentImage = image
-//                )
-//            }
-//        }
-//    }
-//
+
+    fun getNewImage() {
+        viewModelScope.launch {
+            val image = nasaRepository.retrieveSingleRandomImage()
+
+            _imageState.update {
+                it.copy(
+                    currentImage = image
+                )
+            }
+        }
+    }
+
     data class State(
-        val number: Int = Random.nextInt(0,100)
+        val currentImage: SpacePic? = null
     )
 }

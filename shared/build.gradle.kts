@@ -47,15 +47,19 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:2.3.2")
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
+                implementation("io.ktor:ktor-client-serialization:2.3.2")
+                implementation("io.ktor:ktor-client-logging:2.3.2")
                 api("io.insert-koin:koin-core:3.4.0")
-                api("dev.icerock.moko:mvvm-compose:0.16.1")
-                api("dev.icerock.moko:mvvm-flow-compose:0.16.1")
+                implementation("dev.icerock.moko:mvvm-compose:0.16.1")
+                implementation("dev.icerock.moko:mvvm-flow-compose:0.16.1")
+                implementation("io.github.qdsfdhvh:image-loader:1.6.0")
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation("com.squareup.sqldelight:android-driver:1.5.5")
                 implementation("io.ktor:ktor-client-android:2.3.2")
+                implementation("io.ktor:ktor-client-serialization:2.3.2")
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
