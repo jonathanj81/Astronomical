@@ -1,0 +1,21 @@
+CREATE TABLE Image (
+    date TEXT NOT NULL,
+    explanation TEXT,
+    title TEXT,
+    url TEXT,
+    PRIMARY KEY (date)
+);
+
+insertImage:
+INSERT INTO Image(date, explanation, title, url)
+VALUES(?, ?, ?, ?);
+
+retrieveAllImages:
+SELECT *
+FROM Image;
+
+retrieveSingleImage:
+SELECT *
+FROM Image
+WHERE date = ?
+LIMIT 1;

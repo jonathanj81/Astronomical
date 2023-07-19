@@ -95,7 +95,6 @@ sqldelight {
     database("AppDatabase") {
         packageName = "com.atomicrobot.astronomical.data"
     }
-    linkSqlite = true
 }
 
 buildkonfig {
