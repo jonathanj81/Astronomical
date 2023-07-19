@@ -48,6 +48,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
                 api("io.insert-koin:koin-core:3.4.0")
+                api("dev.icerock.moko:mvvm-compose:0.16.1")
+                api("dev.icerock.moko:mvvm-flow-compose:0.16.1")
             }
         }
         val androidMain by getting {

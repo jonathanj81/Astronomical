@@ -12,16 +12,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-@Composable
-fun AstronomyApp() {
-    MaterialTheme {
-        var greetingText by remember { mutableStateOf("Hello, World!") }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = {
-                greetingText += "!"
-            }) {
-                Text(greetingText)
+class AstronomyApp: KoinComponent {
+
+    private val nasaViewModel: NasaViewModel by inject()
+
+    @Composable fun mainContent() {
+
+        return MaterialTheme {
+            var greetingText by remember { mutableStateOf(nasaViewModel.number) }
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Button(onClick = {
+                    greetingText += 1
+                }) {
+                    Text(greetingText.toString())
+                }
             }
         }
     }

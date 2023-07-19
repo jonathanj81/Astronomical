@@ -1,5 +1,7 @@
 package com.atomicrobot.astronomical.di
 
+import com.atomicrobot.astronomical.NasaViewModel
+import com.atomicrobot.astronomical.data.Database
 import com.atomicrobot.astronomical.data.DatabaseDriverFactory
 import com.atomicrobot.astronomical.data.NasaApi
 import com.atomicrobot.astronomical.data.NasaRepository
@@ -30,7 +32,9 @@ fun commonModule(databaseDriverFactory: DatabaseDriverFactory) = module {
 
     single { NasaApi(get()) }
 
-    single{ databaseDriverFactory.createDriver() }
+    single{ Database(databaseDriverFactory) }
 
     single{ NasaRepository(get(), get())}
+
+    single{ NasaViewModel(get())}
 }
