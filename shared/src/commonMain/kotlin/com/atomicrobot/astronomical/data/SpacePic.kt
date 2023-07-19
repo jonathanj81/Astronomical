@@ -6,19 +6,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SpacePic(
     @SerialName("copyright")
-    val copyright: String = "",
+    val copyright: String? = "",
     @SerialName("date")
     val date: String,
     @SerialName("explanation")
-    val explanation: String = "",
+    val explanation: String? = "",
     @SerialName("hdurl")
-    val hdUrl: String = "",
+    val hdUrl: String? = "",
     @SerialName("media_type")
-    val mediaType: String = "",
+    val mediaType: String? = "",
     @SerialName("service_version")
-    val serviceVersion: String = "",
+    val serviceVersion: String? = "",
     @SerialName("title")
-    val title: String = "",
+    val title: String? = "",
     @SerialName("url")
-    val url: String = ""
+    val url: String? = ""
 )

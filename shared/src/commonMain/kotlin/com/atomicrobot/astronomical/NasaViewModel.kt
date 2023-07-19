@@ -21,14 +21,6 @@ class NasaViewModel(
 
     val imageState: StateFlow<State> = _imageState.asStateFlow()
 
-//    fun newNumber() {
-//        _imageState.update {
-//            it.copy(
-//                number = Random.nextInt(0,100)
-//            )
-//        }
-//    }
-
     init {
         viewModelScope.launch {
             val image = nasaRepository.retrieveSingleRandomImage()
@@ -42,6 +34,13 @@ class NasaViewModel(
     }
 
     fun getNewImage() {
+
+        _imageState.update {
+            it.copy(
+                currentImage = it.currentImage?.let { it.copy(url = null) }
+            )
+        }
+
         viewModelScope.launch {
             val image = nasaRepository.retrieveSingleRandomImage()
 

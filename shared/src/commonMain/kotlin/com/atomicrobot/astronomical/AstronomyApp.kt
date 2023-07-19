@@ -40,11 +40,14 @@ class AstronomyApp: KoinComponent {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 
-                Image(
-                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
-                    contentScale = ContentScale.FillBounds,
-                    painter = rememberAsyncImagePainter(imageState.currentImage?.url ?: ""),
-                    contentDescription = "")
+                when (imageState.currentImage?.url){
+                    null -> CircularProgressIndicator()
+                    else -> Image(
+                        modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                        contentScale = ContentScale.FillBounds,
+                        painter = rememberAsyncImagePainter(imageState.currentImage?.url ?: ""),
+                        contentDescription = "")
+                }
 
                 Button(onClick = nasaViewModel::getNewImage) {
                     Text("Get details")
