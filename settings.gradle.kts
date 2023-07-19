@@ -14,13 +14,18 @@ pluginManagement {
         val kotlinVersion = extra["kotlin.version"] as String
         val agpVersion = extra["agp.version"] as String
         val composeVersion = extra["compose.version"] as String
+        val buildKonfigVersion = extra["buildKonfig.version"] as String
+        val sqlDelightVersion = extra["sqlDelight.version"] as String
 
         kotlin("jvm").version(kotlinVersion)
         kotlin("multiplatform").version(kotlinVersion)
         kotlin("android").version(kotlinVersion)
+        kotlin("plugin.serialization").version(kotlinVersion)
 
         id("com.android.application").version(agpVersion)
         id("com.android.library").version(agpVersion)
+        id("com.codingfeline.buildkonfig").version(buildKonfigVersion)
+        id("com.squareup.sqldelight").version(sqlDelightVersion)
 
         id("org.jetbrains.compose").version(composeVersion)
     }

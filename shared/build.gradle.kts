@@ -1,11 +1,17 @@
 
+import java.io.File
+import java.io.FileInputStream
 import java.util.*
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
     id("org.jetbrains.compose")
+    id("com.codingfeline.buildkonfig")
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -35,10 +41,18 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+                implementation("com.squareup.sqldelight:runtime:1.5.5")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("io.ktor:ktor-client-core:2.3.2")
+                implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.2")
             }
         }
         val androidMain by getting {
             dependencies {
+                implementation("com.squareup.sqldelight:android-driver:1.5.5")
+                implementation("io.ktor:ktor-client-android:2.3.2")
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
@@ -52,6 +66,10 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("com.squareup.sqldelight:native-driver:1.5.5")
+                implementation("io.ktor:ktor-client-darwin:2.3.2")
+            }
         }
     }
 }
@@ -70,5 +88,24 @@ android {
     }
     kotlin {
         jvmToolchain(11)
+    }
+}
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.atomicrobot.astronomical.data"
+    }
+    linkSqlite = true
+}
+
+buildkonfig {
+    packageName = "com.atomicrobot.astronomical"
+
+    val properties = Properties().apply {
+        load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+    }
+
+    defaultConfigs {
+        buildConfigField(STRING, "nasa", properties.getProperty("NASA_KEY"))
     }
 }
